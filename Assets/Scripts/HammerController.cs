@@ -29,8 +29,11 @@ public class HammerController : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other){
-		if( other.gameObject.tag == "Ground"){
+		//if( other.gameObject.tag == "Ground"){*/
 			direction *= -1;
+		//}
+		if( other.gameObject.tag == "Player" && other.relativeVelocity.magnitude > 2){
+			other.gameObject.rigidbody.AddExplosionForce( 1000, other.rigidbody.centerOfMass, 50);
 		}
 	}
 }

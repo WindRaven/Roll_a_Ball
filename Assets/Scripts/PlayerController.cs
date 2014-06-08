@@ -53,9 +53,7 @@ public class PlayerController : MonoBehaviour {
 		if( other.gameObject.tag == "Ground"){
 			nrOfJumps = maxJumps;
 		}
-		foreach (ContactPoint contact in other.contacts) {
-			Debug.DrawRay(contact.point, contact.normal, Color.white);
-		}
+
 			
 	
 	}
