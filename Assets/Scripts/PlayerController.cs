@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
 	private int count;
 	public GUIText countText;
 	public GUIText winText;
+	private float lastJumpTouchTime;
 	void SetCountText(){
 		countText.text = "Count :" + count.ToString();
 		winText.gameObject.SetActive(false);
@@ -19,22 +20,41 @@ public class PlayerController : MonoBehaviour {
 		SetCountText();
 		//transform.position = new Vector3( 0.0f, 0.5f, 0.0f);
 	}
-	
+
+	void Jump(){
+		if(nrOfJumps <= 0)
+			return;
+		rigidbody.AddForce(Vector3.up * jumpForce);
+		nrOfJumps--;
+	}
 	// Update is called once per frame
 	void Update () {
-		if( Input.GetKeyDown( "space") && nrOfJumps > 0){
-			rigidbody.AddForce(Vector3.up * jumpForce);
-			nrOfJumps--;
+		if( Input.GetKeyDown( "space") ){
+			Jump();
 		}
 	}
 
 	void FixedUpdate(){
 		float moveHorizontal = Input.GetAxis("Horizontal");
 		float moveVertical = Input.GetAxis("Vertical");
+		if (Input.touchCount > 0){
+			moveHorizontal = Input.touches[0].deltaPosition.x * 0.5f;
+			moveVertical = Input.touches[0].deltaPosition.y * 0.5f;
 
+			if(Input.touchCount > 1){
+				float tTime = Time.realtimeSinceStartup;
+				print (tTime - lastJumpTouchTime);
+				if((tTime - lastJumpTouchTime) > 0.4){
+					Jump();
+					lastJumpTouchTime = tTime;
+				}
+			}
+
+		}
 		Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
 		rigidbody.AddForce(movement * speed * Time.deltaTime);
+
 
 	}
 
