@@ -21,18 +21,18 @@ public class HammerController : MonoBehaviour {
 		                       direction * rotSpeed * Time.deltaTime);
 		Vector3 eAngles = transform.eulerAngles; 
 		if(eAngles.z > 120 && eAngles.z < 180){ 
-			transform.eulerAngles = new Vector3(eAngles.x, eAngles.y, eAngles.z);
+			//transform.eulerAngles = new Vector3(eAngles.x, eAngles.y, 119.99f);
 
-			direction *= -1;
+			direction = -1;
 		}
 
 	}
 
 	void OnCollisionEnter(Collision other){
 		//if( other.gameObject.tag == "Ground"){*/
-			direction *= -1;
+			direction = 1;
 		//}
-		if( other.gameObject.tag == "Player" && other.relativeVelocity.magnitude > 2){
+		if( other.gameObject.tag == "Player" && other.relativeVelocity.magnitude > 1){
 			other.gameObject.rigidbody.AddExplosionForce( 1000, other.rigidbody.centerOfMass, 50);
 		}
 	}
