@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 	public GUIText countText;
 	public GUIText winText;
 	void SetCountText(){
-		countText.text = "Count:" + count.ToString();
+		countText.text = "Count :" + count.ToString();
 		winText.gameObject.SetActive(false);
 	}
 	// Use this for initialization
@@ -53,9 +53,12 @@ public class PlayerController : MonoBehaviour {
 		if( other.gameObject.tag == "Ground"){
 			nrOfJumps = maxJumps;
 		}
-
-			
-	
 	}
+
+	/*void onCollisionStay(Collision collision){
+		if(collision.gameObject.tag == "Ground"){
+			transform.Translate(Vector3.forward * 5 * Time.deltaTime, Space.World);
+		}
+	}*/
 }
 	
